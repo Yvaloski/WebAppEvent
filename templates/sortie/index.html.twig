@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Sorties{% endblock %}
+
+{% block body %}
+
+
+
+    <div class="hero">
+        <h1>Sortir avec Eni</h1>
+        {{ form_start(filtreForm,{'attr': {'class': 'filtreForm form-floating','id':'filtreForm'}}) }}
+
+        <div class="filtre">
+
+            <div class="" id="filtreGauche">
+                {{ form_row(filtreForm.site) }}
+                {{ form_row(filtreForm.nom,{'label':'Par nom'} ) }}
+                {{ form_row(filtreForm.dateDebut) }}
+                {{ form_row(filtreForm.dateFin) }}
+            </div>
+
+        </div>
+        <div class="col-md-4" id="filtreDroit">
+            <div class="check">
+            {{ form_row(filtreForm.sortieQueJOrganise, {'label': "Où j'organise"}) }}
+            {{ form_row(filtreForm.sortieOuJeParcitipe,{'label': "Où je participe"}) }}
+            {{ form_row(filtreForm.sortieOuJeNeParticipePas,{'label': "Où je ne participe pas"}) }}
+            {{ form_row(filtreForm.sortiePassee,{'label': "Passées"}) }}
+
+            </div>
+
+        </div>
+
+        {{ form_end(filtreForm) }}
+
+    </div>
+    <div>
+
+
+    <h2 class="h2Accueil">Liste des sorties</h2>
+    </div>
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <p class="  flash flash-{{ label }}">{{ message }}</p>
+        {% endfor %}
+
+    {% endfor %}
+    <div class="listSortie" id="listSortie">
+        {% include 'sortie/_sorties.html.twig' %}
+    </div>
+
+    <div id="notification" class="bg-danger.bg-gradient">
+        L'inscription n'est plus possible
+    </div>
+    <div id="notificationSuccessInscription" >
+        Inscription effectuée
+    </div>
+    <div id="notificationSuccessDesistement" >
+        Désistement effectué
+    </div>
+
+
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/home_page.js') }}"></script>
+{% endblock %}
+

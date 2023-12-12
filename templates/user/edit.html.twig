@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit User{% endblock %}
+
+{% block body %}
+    <div class="mt-4">
+
+        {% for flashMessage in app.flashes('erreurMdp') %}
+            <div class="alert alert-danger mt-3">
+                {{ flashMessage }}
+            </div>
+        {% endfor %}
+
+    <h1 >Modifier profil</h1>
+    </div>
+    <h4 class="text-danger">
+
+    </h4>
+
+    {{ include('user/_form.html.twig', {'button_label': 'Enregistrer'}) }}
+
+{% endblock %}

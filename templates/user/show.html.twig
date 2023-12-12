@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User{% endblock %}
+
+{% block body %}
+
+    {% for flashMessage in app.flashes('profilModif') %}
+        <div class="alert alert-success mt-3">
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
+    {% if app.user.id == user.id %}
+        <h1>Mon Profil</h1>
+
+        {% else %}
+
+        <h1>Profil de {{ user.fullName }}</h1>
+    {% endif %}
+
+<div class="profil">
+
+        <div>
+            <div class="photo">
+                <img src="{{ asset('uploads/photos/' ~ user.photo) }}" alt="">
+            </div>
+        </div>
+        <div class="profilInfos">
+        <div class="profilDetails">
+            <div class="flex">
+                <h5>Pseudo : </h5>
+                <p>{{ user.pseudo }}</p>
+            </div>
+            <hr>
+            <div class="flex">
+                <h5>Prénom : </h5>
+                <p>{{ user.prenom }}</p>
+            </div>
+            <hr>
+            <div class="flex">
+                <h5>Nom : </h5>
+                <p>{{ user.nom }}</p>
+            </div>
+            <hr>
+        </div>
+
+        <div class="profilDetails">
+            <div class="flex">
+                <h5>Email : </h5>
+                <p>{{ user.email }}</p>
+            </div>
+            <hr>
+            <div class="flex">
+                <h5>Téléphone : </h5>
+                <p>{{ user.telephone }}</p>
+            </div>
+            <hr>
+            <div class="flex">
+                <h5>Site : </h5>
+                <p>{{ user.site.nom }}</p>
+            </div>
+            <hr>
+        </div>
+
+
+    </div>
+</div>
+    {% if app.user.id == user.id %}
+        <div class="mt-4">
+            <a class="btn buttonBlancBleu" href="{{ path('app_user_edit', {'id': user.id}) }}">Modifier</a>
+        </div>
+    {% endif %}
+
+
+{% endblock %}

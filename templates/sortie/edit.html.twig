@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier la Sortie{% endblock %}
+
+{% block body %}
+    <h1>Modifier la Sortie</h1>
+
+    {{ include('sortie/_form.html.twig', {'button_label': 'Modifier'}) }}
+
+
+    <a class="btn buttonBlancBleu"  href="{{ path('app_sortie_index') }}">Retour à l'accueil</a>
+
+    <script src="{{ asset('js/listeLieux.js') }}"></script>
+
+{% endblock %}

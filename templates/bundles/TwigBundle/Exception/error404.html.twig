@@ -1,0 +1,39 @@
+{% extends "base.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+<style>
+    .canvas {
+       display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        max-width: 800px;
+    }
+    .square{
+        background-color: #1d1d1d;
+        box-shadow: 0 0 2px #000;
+        height: 14px;
+        width: 14px;
+        margin: 2px;
+        transition: 2s ease;
+    }
+    .square:hover{
+        transition-duration: 0s;
+    }
+</style>
+{% endblock %}
+
+{% block title %}
+    Page introuvable | {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <h1 style="font-size:180px !important; ">404</h1>
+    <div class="canvas" id="canvas"></div>
+    <h2>Page introuvable</h2>
+
+    <a class="btn buttonBlancBleu" href="{{ path('app_sortie_index') }}">Retour à l'accueil</a>
+    <script src="{{ asset('js/404.js') }}"></script>
+{% endblock %}
+

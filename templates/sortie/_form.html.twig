@@ -1,0 +1,145 @@
+{#{% for label, messages in app.flashes %}
+    {% for message in messages %}
+        <p class="flash flash-{{ label }}">{{ message }}</p>
+    {% endfor %}
+
+{% endfor %}#}
+<div class="profil">
+    {{ form_start(form) }}
+
+    <div class="mb-3">
+        <label for="{{ form.nom.vars.id }}" class="form-label">Nom:</label>
+        {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.nom) }}
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label for="{{ form.dateHeureDebut.vars.id }}" class="form-label">Date et heure de début:</label>
+                {{ form_widget(form.dateHeureDebut, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.dateHeureDebut) }}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label for="{{ form.dateLimiteInscription.vars.id }}" class="form-label">Limite d'inscription:</label>
+                {{ form_widget(form.dateLimiteInscription, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.dateLimiteInscription) }}
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label for="{{ form.duree.vars.id }}" class="form-label">Durée:</label>
+                {{ form_widget(form.duree, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.duree) }}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label for="{{ form.nbInscriptionMax.vars.id }}" class="form-label">Places disponibles:</label>
+                {{ form_widget(form.nbInscriptionMax, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.nbInscriptionMax) }}
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label for="select-ville" class="form-label">Ville:</label>
+                <select class="form-control form-select" id="select-ville" name="villes" required>
+                    <option value="">Choisir une ville</option>
+                    {% for ville in villes %}
+                        <option value="{{ ville.id }}">{{ ville.nom }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label for="{{ form.lieu.vars.id }}" class="form-label">Lieu:</label>
+                {{ form_widget(form.lieu) }}
+
+            </div>
+        </div>
+    </div>
+    <div class="mb-3">
+        <label for="{{ form.infosSortie.vars.id }}" class="form-label">Infos:</label>
+        {{ form_widget(form.infosSortie, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    <div class="mb-3">
+        {{ form_widget(form.isPublished, {'attr': {'class': 'form-control m-0'}}) }}
+
+    </div>
+    <div class="mt-3">
+        <a class="btn buttonBlancBleu m-3" id="ajouterLieu" href="#"> Ajouter un lieu</a>
+
+        <button class="btn buttonBleuVert">{{ button_label|default('Enregistrer') }}</button>
+    </div>
+    <!-- Modale pour l'ajout de lieu -->
+
+
+    {{ form_end(form) }}
+    <div class="modal fade" id="ajoutLieuModal" tabindex="-1" role="dialog" aria-labelledby="ajoutLieuModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ajoutLieuModalLabel">Ajouter un lieu</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+
+                    {{ render(controller('App\\Controller\\LieuController::new')) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function() {
+        $('#ajouterLieu').click(function(e) {
+            e.preventDefault();
+            $('#ajoutLieuModal').modal('show');
+        });
+
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        // Intercepter la soumission du formulaire
+        $('#lieuForm').submit(function(e) {
+            e.preventDefault();
+
+            // Récupérer l'URL de soumission depuis l'attribut data-url
+            var url = $(this).attr('action');
+            console.log("URL de soumission du formulaire : ", url);
+
+            // Envoyer une requête AJAX pour soumettre le formulaire
+            $.ajax({
+                url: url,
+                method: 'POST',
+                data: $(this).serialize(),
+                success: function(data) {
+                    // Traiter la réponse si nécessaire
+                    console.log("Formulaire soumis avec succès", data);
+
+                    // Fermer la modale (si nécessaire)
+                    $('#ajoutLieuModal').modal('hide');
+                },
+                error: function(error) {
+                    console.error("Erreur lors de la soumission du formulaire", error);
+                }
+            });
+        });
+
+    });
+</script>
+
+
